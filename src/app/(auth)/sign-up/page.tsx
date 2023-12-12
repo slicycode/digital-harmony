@@ -1,18 +1,19 @@
 'use client'
 
+import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
-import { ArrowRight } from 'lucide-react'
 
 import { Icons } from '@/components/Icons'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@/lib/utils'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { AuthCredentialsValidator } from '@/lib/validators/account-credentials'
 import type { TAuthCredentialsValidator } from '@/lib/validators/account-credentials'
+import { AuthCredentialsValidator } from '@/lib/validators/account-credentials'
+import { trpc } from '@/trpc/client'
 
 const Page = () => {
   const {
@@ -22,6 +23,8 @@ const Page = () => {
   } = useForm<TAuthCredentialsValidator>({
     resolver: zodResolver(AuthCredentialsValidator),
   })
+
+  const { data } = trpc.hello.useQuery()
 
   const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {}
 
