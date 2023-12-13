@@ -10,14 +10,13 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 
-import { trpc } from '@/trpc/client'
-import { toast } from 'sonner'
-import { ZodError } from 'zod'
-import { useRouter, useSearchParams } from 'next/navigation'
 import {
   AuthCredentialsValidator,
   TAuthCredentialsValidator,
 } from '@/lib/validators/account-credentials'
+import { trpc } from '@/trpc/client'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { toast } from 'sonner'
 
 const Page = () => {
   const searchParams = useSearchParams()
@@ -42,10 +41,8 @@ const Page = () => {
   })
 
   const { mutate: signIn, isLoading } = trpc.auth.signIn.useMutation({
-    onSuccess: () => {
-      toast.success('Signed in successfully!')
-
-      router.refresh()
+    onSuccess: async () => {
+      toast.success('Signed in successfully')
 
       if (origin) {
         router.push(`/${origin}`)
@@ -58,10 +55,11 @@ const Page = () => {
       }
 
       router.push('/')
+      router.refresh()
     },
     onError: (err) => {
       if (err.data?.code === 'UNAUTHORIZED') {
-        toast.error('Invalid email or password')
+        toast.error('Invalid email or password.')
       }
     },
   })
