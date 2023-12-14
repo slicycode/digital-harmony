@@ -1,11 +1,12 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
+import ProductReel from '@/components/ProductReel'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { ArrowDownToLine, CheckCircle, Leaf } from 'lucide-react'
 import Link from 'next/link'
 
 const perks = [
   {
-    name: 'Instand Delivery',
+    name: 'Instant Delivery',
     Icon: ArrowDownToLine,
     description:
       'Get your assets delivered to your email inbox instantly after purchase.',
@@ -44,6 +45,13 @@ export default function Home() {
             <Button variant="ghost">Our quality promise &rarr;</Button>
           </div>
         </div>
+
+        <ProductReel
+          query={{ sort: 'desc', limit: 4 }}
+          title="Brand new"
+          subtitle="Subtitle"
+          href="/products"
+        />
       </MaxWidthWrapper>
 
       <section className="border-t border-gray-200 bg-gray-50">
