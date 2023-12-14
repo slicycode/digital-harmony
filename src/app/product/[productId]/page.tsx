@@ -16,20 +16,13 @@ interface PageProps {
 }
 
 const BREADCRUMBS = [
-  {
-    id: 1,
-    name: 'Home',
-    href: '/',
-  },
-  {
-    id: 2,
-    name: 'Products',
-    href: '/products',
-  },
+  { id: 1, name: 'Home', href: '/' },
+  { id: 2, name: 'Products', href: '/products' },
 ]
 
 const Page = async ({ params }: PageProps) => {
   const { productId } = params
+
   const payload = await getPayloadClient()
 
   const { docs: products } = await payload.find({
@@ -47,6 +40,8 @@ const Page = async ({ params }: PageProps) => {
 
   const [product] = products
 
+  if (!product) return notFound()
+
   const label = PRODUCT_CATEGORIES.find(
     ({ value }) => value === product.category
   )?.label
@@ -55,24 +50,22 @@ const Page = async ({ params }: PageProps) => {
     .map(({ image }) => (typeof image === 'string' ? image : image.url))
     .filter(Boolean) as string[]
 
-  if (!product) return notFound()
-
   return (
     <MaxWidthWrapper className="bg-white">
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="lg:max-w-lg lg:self-end">
             <ol className="flex items-center space-x-2">
-              {BREADCRUMBS.map((breadcrumb, index) => (
+              {BREADCRUMBS.map((breadcrumb, i) => (
                 <li key={breadcrumb.href}>
                   <div className="flex items-center text-sm">
                     <Link
-                      className="font-medium text-sm text-muted-foreground hover:text-gray-900"
                       href={breadcrumb.href}
+                      className="font-medium text-sm text-muted-foreground hover:text-gray-900"
                     >
                       {breadcrumb.name}
                     </Link>
-                    {index !== BREADCRUMBS.length - 1 ? (
+                    {i !== BREADCRUMBS.length - 1 ? (
                       <svg
                         viewBox="0 0 20 20"
                         fill="currentColor"
@@ -122,19 +115,19 @@ const Page = async ({ params }: PageProps) => {
             </section>
           </div>
 
-          <div className="mt-10 lg:col-start-2 lg:row-start-2 lg:mt-0 lg:self-center">
+          <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
             <div className="aspect-square rounded-lg">
               <ImageSlider urls={validUrls} />
             </div>
           </div>
 
-          <div className="mt-10 lg:col-start-2 lg:row-start-2 lg:max-w-lg lg:self-start">
+          <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
             <div>
               <div className="mt-10">
-                <AddToCartButton />
+                <AddToCartButton product={product} />
               </div>
               <div className="mt-6 text-center">
-                <div className="group inline-flex text-sm font-medium">
+                <div className="group inline-flex text-sm text-medium">
                   <Shield
                     aria-hidden="true"
                     className="mr-2 h-5 w-5 flex-shrink-0 text-gray-400"
