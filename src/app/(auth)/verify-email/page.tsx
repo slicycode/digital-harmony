@@ -25,6 +25,7 @@ const VerifyEmailPage = ({ searchParams }: PageProps) => {
                 src="/hippo-email-sent.png"
                 fill
                 alt="hippo email sent image"
+                className="pointer-events-none"
               />
             </div>
 

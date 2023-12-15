@@ -1,6 +1,6 @@
 'use client'
 
-import { ShoppingCart } from 'lucide-react'
+import { Loader2, ShoppingCart } from 'lucide-react'
 import {
   Sheet,
   SheetContent,
@@ -44,7 +44,11 @@ const Cart = () => {
           className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
         />
         <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-          {isMounted ? itemCount : 0}
+          {isMounted ? (
+            itemCount
+          ) : (
+            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+          )}
         </span>
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
@@ -101,6 +105,7 @@ const Cart = () => {
                 src="/hippo-empty-cart.png"
                 fill
                 alt="empty shopping cart hippo"
+                className="pointer-events-none"
               />
             </div>
             <div className="text-xl font-semibold">Your cart is empty</div>

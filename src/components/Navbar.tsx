@@ -5,8 +5,8 @@ import Cart from './Cart'
 import { Icons } from './Icons'
 import MaxWidthWrapper from './MaxWidthWrapper'
 import NavItems from './NavItems'
-import { buttonVariants } from './ui/button'
 import UserAccountNav from './UserAccountNav'
+import { buttonVariants } from './ui/button'
 
 const Navbar = async () => {
   const nextCookies = cookies()
@@ -28,8 +28,8 @@ const Navbar = async () => {
                 <NavItems />
               </div>
 
-              <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+              <div className="ml-auto mr-4 lg:mr-0 flex items-center">
+                <div className="flex flex-1 items-center justify-end lg:space-x-6">
                   {user ? null : (
                     <Link
                       href="/sign-in"
